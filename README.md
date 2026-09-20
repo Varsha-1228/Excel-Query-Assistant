@@ -1,22 +1,22 @@
 # Excel Query Assistant
 
-**Excel Query Assistant** is a web application built with **Streamlit** **Python** **SQLite**. The **Google Gemini API**.
+**Excel Query Assistant** is a web app that uses **Python, Streamlit, SQLite, Pandas and the Google Gemini API**.
 
-The Excel Query Assistant lets users upload Excel (files. The Excel Query Assistant automatically turns those files into a database so you can ask questions about the data using plain language. Gemini then creates the SQL queries and the Excel Query Assistant shows the results in a Streamlit interface.
+It lets users upload Excel files and ask questions about the data in language. The app turns the Excel data into a database and Gemini creates SQL queries from the questions. The answers appear in the Streamlit interface.
 
 ## Features
 
-* **Excel File Upload** – Upload.xlsx files directly through the Excel Query Assistant.
+* **Excel File Upload** – Upload `files right through the app.
 
-* **Automatic Data Conversion** – The Excel Query Assistant turns Excel data into a SQLite database for querying.
+* **Automatic Data Conversion** – Turns Excel data into database tables.
 
 * **Natural Language Queries** – Ask questions about your Excel data in language.
 
-* **SQL Query Generation** – Gemini automatically creates SQL queries from the Excel Query Assistant’s questions.
+* **SQL Query Generation** – Gemini makes SQL queries from user questions.
 
-* **Query Results** – View the retrieved information directly in the Excel Query Assistant’s Streamlit interface.
+* **Query Results** – Shows the retrieved information in the Streamlit interface.
 
-* **Simple Streamlit Interface** – An easy‑to‑use web interface for working with Excel data.
+* **Simple Streamlit Interface** – Gives a to-use interface for working with Excel data.
 
 ## Technologies Used
 
@@ -46,13 +46,17 @@ Excel-Query-Assisstant/
 
 ├── README.md
 
-└─ LICENSE
+├── LICENSE
+
+├──.gitignore
+
+└──.env
 
 ```
 
-## Prerequisites
+> **Note:** The `.env` file holds your API key. Must never be uploaded to GitHub. It is excluded by `.gitignore`.
 
-Before running the project make sure you have:
+## Prerequisites
 
 * Python installed
 
@@ -62,17 +66,15 @@ Before running the project make sure you have:
 
 * A Google Gemini API key
 
-* Internet connection
+* An active internet connection
 
 ## Installation
 
 ### 1. Clone the Repository
 
-Clone the repository using Git:
-
 ```bash
 
-git clone https://github.com/Margamharini/Excel-Query-Assisstant.git
+git clone https://github.com/Varsha-1228/Excel-Query-Assistant.git
 
 ```
 
@@ -80,7 +82,7 @@ Move into the project directory:
 
 ```bash
 
-cd Excel-Query-Assisstant
+cd Excel-Query-Assistant
 
 ```
 
@@ -94,11 +96,19 @@ pip install -r requirements.txt
 
 ```
 
-If you are using Anaconda you can use:
+If you are using Anaconda:
 
 ```bash
 
 python -m pip install -r requirements.txt
+
+```
+
+If `python-dotenv` is not already included in `requirements.txt` install it using:
+
+```bash
+
+pip install python-dotenv
 
 ```
 
@@ -110,45 +120,75 @@ The Excel Query Assistant requires a Google Gemini API key to generate SQL queri
 
 Create a Gemini API key through **Google AI Studio**.
 
-Do not share your API key publicly. Commit it to GitHub.
+**Never share your API key publicly. Upload it to GitHub.**
 
-### 2. Set the API Key
+### 2. Create a `.env` File
 
-The Excel Query Assistant reads the API key using the following code:
+Inside the project folder create a file named:
+
+```text
+
+.env
+
+```
+
+Add the following:
+
+```text
+
+GOOGLE_API_KEY=YOUR_API_KEY
+
+```
+
+Replace `YOUR_API_KEY` with your Gemini API key.
+
+For example:
+
+```text
+
+GOOGLE_API_KEY=your-api-key
+
+```
+
+### 3. Load the API Key
+
+The application loads the API key from the `.env` file using:
 
 ```python
+
+from dotenv import load_dotenv
+
+import os
+
+load_dotenv()
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 ```
 
-Therefore you need to set the `GOOGLE_API_KEY` environment variable before running the Excel Query Assistant.
+This means you do **not** need to enter the API key in PowerShell every time you run the application.
 
-### Windows PowerShell
+### 4. Protect Your API Key
 
-Open PowerShell in the project directory. Run:
+Make.env` is included in `.gitignore`:
 
-```powershell
+```text
 
-$env:GOOGLE_API_KEY="YOUR_API_KEY"
+.env
 
-```
+__pycache__/
 
-Replace `YOUR_API_KEY` with your actual Gemini API key.
+*.pyc
 
-**Example:**
-
-```powershell
-
-$env:GOOGLE_API_KEY="your-api-key-
+*.db
 
 ```
 
-Do not commit or upload the actual API key to GitHub.
+This prevents your API key and local database files from being uploaded to GitHub.
 
 ## Running the Application
 
-After installing the dependencies and setting the API key run the Streamlit application:
+After installing the dependencies and creating the `.env` file run the Streamlit application:
 
 ```bash
 
@@ -156,7 +196,7 @@ streamlit run new.py
 
 ```
 
-If you are using Anaconda and want to make sure Streamlit runs with the Python environment use:
+If you are using Anaconda and want to make sure Streamlit runs with the Python environment:
 
 ```powershell
 
@@ -164,53 +204,53 @@ C:\Users\YourUsername\anaconda3\python.exe -m streamlit run new.py
 
 ```
 
-After starting the Excel Query Assistant Streamlit will display a local URL similar to:
+The application will open in your browser. If it does not open automatically Streamlit will give an URL that looks like:
 
 ```text
 
-Local URL: http://localhost:8501
+http://localhost:8501
 
 ```
 
-Open this URL in your web browser.
+Open the URL in your web browser.
 
 ## How It Works
 
 The Excel Query Assistant follows these steps:
 
-1. **Upload an Excel File**
+### 1. Upload an Excel File
 
-Upload an `file, through the Streamlit interface.
+Upload an `file through the Streamlit interface.
 
-2. **Read the Excel Data**
+### 2. Read the Excel Data
 
 The application reads the Excel file using Python and Pandas.
 
-3. **Convert Data to SQLite**
+### 3. Convert Data to SQLite
 
 The Excel data is converted into tables in a SQLite database.
 
-4. **Ask a Question**
+### 4. Ask a Question
 
-Enter a question about the data using natural language.
+Enter a question about the data using language.
 
 For example:
 
 ```text
 
-What is the total sales amount?
+What is the average salary of employees in the IT department?
 
 ```
 
-5. **Generate SQL Query**
+### 5. Generate SQL Query
 
-The Gemini API analyzes the question. Generates an SQL query that can be used to retrieve the required information.
+The Gemini API analyzes the question and generates an SQL query to retrieve the information.
 
-6. **Execute the Query**
+### 6. Execute the Query
 
 The generated SQL query is executed against the SQLite database.
 
-7. **Display the Result**
+### 7. Display the Result
 
 The application displays the query result in the Streamlit interface.
 
@@ -232,7 +272,7 @@ You could ask:
 
 ```text
 
-What is the salary of employees in the IT department?
+What is the average salary of employees in the IT department?
 
 ```
 
@@ -270,6 +310,14 @@ pip install google-generativeai
 
 ```
 
+If you are using Anaconda:
+
+```bash
+
+C:\Users\YourUsername\anaconda3\python.exe -m pip install google-generativeai
+
+```
+
 ### 2. `DefaultCredentialsError`
 
 If you see:
@@ -280,13 +328,33 @@ DefaultCredentialsError: No API_KEY or ADC found
 
 ```
 
-make sure that the `GOOGLE_API_KEY` environment variable has been set.
+make sure:
 
-For PowerShell:
+1. A `.env` file exists in the project folder.
 
-```powershell
+2. The `.env` file contains:
 
-$env:GOOGLE_API_KEY="YOUR_API_KEY"
+```text
+
+GOOGLE_API_KEY=YOUR_API_KEY
+
+```
+
+3. `New.py` contains:
+
+```python
+
+from dotenv import load_dotenv
+
+import os
+
+load_dotenv()
+
+```
+
+```Python
+
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 ```
 
@@ -302,7 +370,7 @@ If you see an error such as:
 
 ```
 
-the project may be using a Gemini model name.
+the project may be using an unsupported Gemini model name.
 
 Check the model configured in `new.py` and use a supported Gemini model according to the Google Gemini API documentation.
 
@@ -318,13 +386,23 @@ genai.configure(api_key="YOUR_SECRET_API_KEY")
 
 ```
 
-Instead use the `GOOGLE_API_KEY` environment variable:
+Instead use the `.env` file:
+
+```text
+
+GOOGLE_API_KEY=YOUR_API_KEY
+
+```
+
+and load it in Python:
 
 ```python
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 ```
+
+The `.env` file's excluded from Git using `.gitignore`.
 
 If you accidentally expose an API key publicly revoke it. Create a new one.
 
@@ -343,6 +421,10 @@ If you accidentally expose an API key publicly revoke it. Create a new one.
 6. Let the application generate the SQL query.
 
 7. View the query results.
+
+## Author
+
+**Varsha Mulkanooru**
 
 ## License
 
