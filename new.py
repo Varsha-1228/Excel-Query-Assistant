@@ -49,7 +49,7 @@ def generate_sql_query(question, table_name):
     2. Include any necessary clauses (e.g., WHERE, GROUP BY, ORDER BY) to accurately reflect the question.
     3. Provide only the SQL query without any additional text, formatting, or code blocks.
     """
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-3.5-flash')
     response = model.generate_content([prompt])
     sql_query = response.text.strip()  # Clean up the response
     return sql_query
